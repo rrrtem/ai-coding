@@ -102,8 +102,20 @@ sudo apt install -y python3 python3-pip python3-venv
 
 Проверь: `ls /Applications/Docker.app 2>/dev/null`
 
-Если нет — скажи участнику:
-> Docker Desktop нужно скачать и установить вручную — [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/). После скачивания — перетащи в Applications и открой один раз, чтобы он настроился.
+Если нет — **это единственный инструмент, который нельзя поставить из терминала на macOS.** Предупреди участника и объясни пошагово:
+
+> Сейчас нужно будет сделать кое-что руками — Docker Desktop на macOS нельзя установить командой, только через браузер. Вот что нужно сделать:
+>
+> 1. Открой браузер и перейди на [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/)
+> 2. Нажми кнопку "Download for Mac" (выбери Apple Chip если у тебя M1/M2/M3/M4, или Intel Chip если старый Mac)
+> 3. Скачается файл `Docker.dmg` — открой его
+> 4. Перетащи иконку Docker в папку Applications
+> 5. Открой Docker из Applications один раз — он настроится (это займёт минуту)
+> 6. Когда в верхней панели появится иконка кита — Docker готов
+>
+> Скажи мне когда закончишь, и я проверю что всё работает.
+
+Дождись подтверждения участника.
 
 **Linux:**
 ```bash

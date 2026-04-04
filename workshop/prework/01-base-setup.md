@@ -214,7 +214,7 @@ gh auth login
 
 Если не установлен — объясни:
 
-> **Что:** Vercel CLI — инструмент для управления платфор��ой Vercel из терминала. Vercel — это хостинг (hosting) — место, где твой сайт живёт в интернете и доступен по ссылке.
+> **Что:** Vercel CLI — инструмент для управления платформой Vercel из терминала. Vercel — это хостинг (hosting) — место, где твой сайт живёт в интернете и доступен по ссылке.
 > **Простыми словами:** Ты сделал сайт на своём компьютере — но пока он как рукопись в ящике стола, никто его не видит. Vercel — это типография + доставка: берёт твой код и делает его доступным для всего мира по ссылке.
 > **Зачем:** Без хостинга сайт существует только на твоём компьютере. Vercel берёт код из GitHub и автоматически превращает его в работающий сайт с HTTPS (защищённое соединение — замочек в адресной строке), красивым доменом, и CDN (сеть серверов по всему миру, чтобы сайт быстро грузился из любой страны). Каждый `git push` — и сайт обновляется сам.
 > **Связи:** Ты пишешь код → Git фиксирует изменения → `git push` отправляет на GitHub → Vercel подхватывает и деплоит. Vercel CLI позволяет управлять этим процессом: `vercel deploy`, `vercel env pull`, `vercel logs`.
@@ -233,7 +233,7 @@ npm install -g vercel
 
 Если не установлен — объясни:
 
-> **Что:** Supabase CLI — инструмент для управления Supabase из терминала. Supabase — это готовый бэкенд "из коробки": база данных (хранилище ��анных в виде таблиц, как мощный Excel) + авторизация (логин/регистрация поль��ователей) + хранилище файлов.
+> **Что:** Supabase CLI — инструмент для управления Supabase из терминала. Supabase — это готовый бэкенд "из коробки": база данных (хранилище данных в виде таблиц, как мощный Excel) + авторизация (логин/регистрация пользователей) + хранилище файлов.
 > **Простыми словами:** Представь что ты открываешь магазин. Витрина (сайт) — это Vercel. А Supabase — это всё что за витриной: склад товаров (база данных), касса (авторизация), система учёта (API). Без этого магазин — просто красивая картинка.
 > **Зачем:** Любое приложение с данными (пользователи, заказы, посты) нуждается в базе данных и API (способ общения между сайтом и сервером — как окошко выдачи заказов). Без Supabase пришлось бы самому поднимать сервер, ставить PostgreSQL, писать API, настраивать авторизацию — на это уходят дни. Supabase даёт всё это за минуты.
 > **Связи:** Vercel (хостит фронтенд — витрину, то что видит пользователь) ↔ Supabase (хранит данные — склад за кулисами). Вместе они покрывают 80% потребностей типичного веб-приложения. CLI нужен для миграций (migration — изменение структуры таблиц в базе данных, например "добавить колонку телефон") и локальной разработки.
@@ -264,7 +264,7 @@ cat ~/.npmrc 2>/dev/null || echo "НЕ НАЙДЕН"
 
 **Если файла нет** — создай и объясни:
 
-> **Что:** `.npmrc` — файл конфигурации npm. Лежит в домашней папке (`~`) и влияе�� на поведен��е npm во всех проектах.
+> **Что:** `.npmrc` — файл конфигурации npm. Лежит в домашней папке (`~`) и влияет на поведение npm во всех проектах.
 > **Простыми словами:** Как настройки безопасности на телефоне: "не устанавливать приложения из неизвестных источников", "проверять на вирусы". Один раз включил — и забыл, оно защищает тебя в фоне.
 > **Зачем:** npm по умолчанию доверяет всем пакетам — скачал и сразу запускает скрипты (scripts — небольшие программы, которые автор пакета заложил для автоматического запуска при установке). Злоумышленники создают пакеты с похожими названиями (`lodas` вместо `lodash`) и вшивают вредоносный код в эти скрипты. `.npmrc` меняет настройки по умолчанию на безопасные.
 > **Связи:** npm (менеджер пакетов) читает `.npmrc` при каждой операции. Это влияет на установку всех пакетов во всех проектах — Vercel CLI, Supabase CLI, библиотеки проекта. Настроил один раз — работает везде.
@@ -338,16 +338,16 @@ if echo "$REGISTRY_DATA" | grep -q '"error"'; then
 fi
 
 # Get creation date
-CREATED=$(echo "$REGISTRY_DATA" | python3 -c "import sys,json; print(json.load(sys.stdin)['time']['created'])" 2>/dev/null || echo "unknown")
+CREATED=$(echo "$REGISTRY_DATA" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).time.created)}catch{console.log('unknown')}})" 2>/dev/null || echo "unknown")
 
 # Get latest version
-LATEST=$(echo "$REGISTRY_DATA" | python3 -c "import sys,json; print(json.load(sys.stdin)['dist-tags']['latest'])" 2>/dev/null || echo "unknown")
+LATEST=$(echo "$REGISTRY_DATA" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d)['dist-tags'].latest)}catch{console.log('unknown')}})" 2>/dev/null || echo "unknown")
 
 # Get latest version publish date
-LATEST_DATE=$(echo "$REGISTRY_DATA" | python3 -c "import sys,json; print(json.load(sys.stdin)['time'][json.load(sys.stdin)['dist-tags']['latest']])" 2>/dev/null || echo "unknown")
+LATEST_DATE=$(echo "$REGISTRY_DATA" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const j=JSON.parse(d);console.log(j.time[j['dist-tags'].latest])}catch{console.log('unknown')}})" 2>/dev/null || echo "unknown")
 
 # Get weekly downloads
-DOWNLOADS=$(curl -s "https://api.npmjs.org/downloads/point/last-week/$PACKAGE" 2>/dev/null | python3 -c "import sys,json; print(json.load(sys.stdin).get('downloads', 0))" 2>/dev/null || echo "0")
+DOWNLOADS=$(curl -s "https://api.npmjs.org/downloads/point/last-week/$PACKAGE" 2>/dev/null | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).downloads||0)}catch{console.log(0)}})" 2>/dev/null || echo "0")
 
 WARNINGS=0
 

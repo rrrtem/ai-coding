@@ -13,29 +13,7 @@
 
 Копируйте каждую команду и вставляйте в терминал (`Cmd + V`). После каждой — нажмите Enter и дождитесь завершения.
 
-### 1. Homebrew
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-Если у вас Mac на Apple Silicon (M1/M2/M3/M4) — после установки выполните:
-```bash
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
-```
-
-Проверка: `brew --version`
-
-### 2. Node.js
-
-```bash
-brew install node
-```
-
-Проверка: `node -v` (должно быть v22 или выше), `npm -v` (должно быть 11.x.x)
-
-### 3. Claude Code
+### 1. Claude Code
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
@@ -49,6 +27,28 @@ claude
 Следуйте инструкциям на экране — Claude попросит войти в аккаунт.
 
 Проверка: `claude --version`
+
+### 2. Homebrew
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Если у вас Mac на Apple Silicon (M1/M2/M3/M4) — после установки выполните:
+```bash
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+```
+
+Проверка: `brew --version`
+
+### 3. Node.js
+
+```bash
+brew install node
+```
+
+Проверка: `node -v` (должно быть v22 или выше), `npm -v` (должно быть 11.x.x)
 
 ### 4. Git
 
@@ -116,24 +116,24 @@ ggshield auth login
 
 ## Базовая установка (Linux / WSL)
 
-### 1. Обновить пакеты
+### 1. Claude Code
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+claude
+```
+
+### 2. Обновить пакеты
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 2. Node.js
+### 3. Node.js
 
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
-```
-
-### 3. Claude Code
-
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
-claude
 ```
 
 ### 4. Git
