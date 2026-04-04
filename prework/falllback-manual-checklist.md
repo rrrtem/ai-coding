@@ -108,7 +108,7 @@ grep -q "^fund=false" ~/.npmrc 2>/dev/null || echo "fund=false" >> ~/.npmrc
 
 ### 9. npm-safe-install (опционально)
 
-Скрипт для проверки npm-пакетов перед установкой. Полная версия с кодом — в `workshop/prework/01-base-setup.md`, секция 1.9. Если вы завершили автоматическую установку — скрипт уже создан.
+Скрипт для проверки npm-пакетов перед установкой. Полная версия с кодом — в `prework/01-base-setup.md`, секция 1.9. Если вы завершили автоматическую установку — скрипт уже создан.
 
 ### 10. GitGuardian (опционально)
 
@@ -116,6 +116,32 @@ grep -q "^fund=false" ~/.npmrc 2>/dev/null || echo "fund=false" >> ~/.npmrc
 brew install gitguardian/tap/ggshield
 ggshield auth login
 ```
+
+### 11. Claude Code Skills
+
+**Superpowers (skill pack):**
+
+В Claude Code выполните slash-команду:
+```
+/plugin install superpowers@claude-plugins-official
+```
+
+Если не сработает — попробуйте:
+```
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
+```
+
+Репозиторий: https://github.com/obra/superpowers
+
+**az-review (авторский скилл):**
+
+```bash
+mkdir -p ~/.claude/skills/az-review
+cp prework/skills/az-review/SKILL.md ~/.claude/skills/az-review/SKILL.md
+```
+
+Проверка: `test -f ~/.claude/skills/az-review/SKILL.md && echo "OK"`
 
 ## Базовая установка (Linux / WSL)
 
@@ -185,6 +211,10 @@ brew install supabase/tap/supabase
 
 Команды `.npmrc` и ggshield одинаковы на всех платформах — см. macOS-секции 8-10 выше.
 
+### 11. Claude Code Skills
+
+Установка Skills одинакова на всех платформах — см. macOS-секцию 11 выше.
+
 ## Дополнительно (по типу проекта)
 
 ### Telegram-бот / Автоматизации
@@ -229,6 +259,7 @@ gh auth status
 vercel --version
 supabase --version
 cat ~/.npmrc
+test -f ~/.claude/skills/az-review/SKILL.md && echo "az-review: OK" || echo "az-review: не найден"
 ```
 
 Если всё работает — вы готовы к воркшопу!

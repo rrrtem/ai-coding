@@ -160,7 +160,7 @@ curl -fsSL https://github.com/hetznercloud/cli/releases/latest/download/hcloud-l
 Проверь: `hcloud version`
 
 Сообщи:
-> hcloud установлен. Для работы с Hetzner нужно будет создать аккаунт — это делается на воркшопе или после. Инструкция по настройке и безопасности сервера лежит в `workshop/prework/vps-hardening-runbook.md`.
+> hcloud установлен. Для работы с Hetzner нужно будет создать аккаунт — это делается на воркшопе или после. Инструкция по настройке и безопасности сервера лежит в `docs/vps-hardening-runbook.md`.
 
 ## 2.6 Expo (мобильные приложения)
 

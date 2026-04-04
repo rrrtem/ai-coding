@@ -41,6 +41,10 @@ which npm-safe-install 2>/dev/null || echo "npm-safe-install: не найден"
 ggshield --version 2>/dev/null || echo "ggshield: не установлен"
 ggshield auth status 2>&1 || echo "ggshield: не авторизован"
 
+# Claude Code Skills
+test -f ~/.claude/skills/az-review/SKILL.md && echo "az-review: установлен" || echo "az-review: не установлен"
+# Superpowers — проверяется через наличие плагина, Claude Code определит сам
+
 # Python (если устанавливали)
 python3 --version 2>/dev/null || echo "python3: не установлен"
 
@@ -99,6 +103,13 @@ hcloud version 2>/dev/null || echo "hcloud: не установлен (не ну
 | ggshield | [OK / не установлен] |
 | ggshield auth | [OK / не авторизован / пропущено] |
 
+## Claude Code Skills
+
+| Компонент | Статус |
+|-----------|--------|
+| Superpowers plugin | [OK / не установлен] |
+| az-review skill | [OK / не установлен] |
+
 ## Дополнительные инструменты
 
 | Инструмент | Версия | Статус | Зачем |
@@ -139,4 +150,4 @@ hcloud version 2>/dev/null || echo "hcloud: не установлен (не ну
 > Всё готово! Отчёт сохранён в `setup-report.md`. Отправь его ведущему воркшопа. Этот проект можешь использовать как шпаргалку — здесь лежит гайдбук и все инструкции.
 
 Если есть проблемы:
-> Почти всё готово, но есть [N] проблем(а). Они записаны в `setup-report.md`. Попробуй решить их с помощью файла `workshop/fallback/manual-checklist.md` или отправь отчёт ведущему — поможем разобраться.
+> Почти всё готово, но есть [N] проблем(а). Они записаны в `setup-report.md`. Попробуй решить их с помощью файла `prework/falllback-manual-checklist.md` или отправь отчёт ведущему — поможем разобраться.
