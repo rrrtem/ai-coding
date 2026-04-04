@@ -34,7 +34,7 @@ claude
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Если у вас Mac на Apple Silicon (M1/M2/M3/M4) — после установки выполните:
+Если у вас Mac на Apple Silicon (M1/M2/M3/M4) — **обязательно** выполните после установки (иначе `brew` не найдётся):
 ```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -147,9 +147,7 @@ git config --global user.name "Ваше Имя"
 git config --global user.email "your@email.com"
 ```
 
-### 5-9: те же команды что для macOS
-
-(gh, vercel, supabase CLI, npmrc — команды `npm install -g` и `gh auth login` одинаковы на всех платформах)
+### 5. GitHub CLI (Linux)
 
 Для GitHub CLI на Linux:
 ```bash
@@ -162,6 +160,30 @@ git config --global user.email "your@email.com"
   && sudo apt update \
   && sudo apt install gh -y
 ```
+
+Авторизация: `gh auth login` (выберите GitHub.com → HTTPS → Login with a web browser)
+
+### 6. Vercel CLI (Linux — то же что macOS)
+
+```bash
+npm install -g vercel
+```
+
+Проверка: `vercel --version`
+
+### 7. Supabase CLI (Linux)
+
+```bash
+# Через Homebrew (если установлен):
+brew install supabase/tap/supabase
+# Или скачайте бинарник с https://github.com/supabase/cli/releases
+```
+
+Проверка: `supabase --version`
+
+### 8-10: Безопасность и npm-safe-install
+
+Команды `.npmrc` и ggshield одинаковы на всех платформах — см. macOS-секции 8-10 выше.
 
 ## Дополнительно (по типу проекта)
 
