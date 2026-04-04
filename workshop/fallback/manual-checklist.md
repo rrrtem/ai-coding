@@ -13,7 +13,22 @@
 
 Копируйте каждую команду и вставляйте в терминал (`Cmd + V`). После каждой — нажмите Enter и дождитесь завершения.
 
-### 1. Homebrew
+### 1. Claude Code
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Первый запуск и авторизация:
+```bash
+claude
+```
+
+Следуйте инструкциям на экране — Claude попросит войти в аккаунт.
+
+Проверка: `claude --version`
+
+### 2. Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -27,7 +42,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 Проверка: `brew --version`
 
-### 2. Node.js
+### 3. Node.js
 
 ```bash
 brew install node
@@ -35,7 +50,7 @@ brew install node
 
 Проверка: `node -v` (должно быть v22 или выше), `npm -v` (должно быть 11.x.x)
 
-### 3. Git
+### 4. Git
 
 ```bash
 brew install git
@@ -49,7 +64,7 @@ git config --global user.email "your@email.com"
 
 Проверка: `git --version`
 
-### 4. GitHub CLI
+### 5. GitHub CLI
 
 ```bash
 brew install gh
@@ -63,7 +78,7 @@ gh auth login
 
 Проверка: `gh auth status`
 
-### 5. Vercel CLI
+### 6. Vercel CLI
 
 ```bash
 npm install -g vercel
@@ -71,7 +86,7 @@ npm install -g vercel
 
 Проверка: `vercel --version`
 
-### 6. Supabase CLI
+### 7. Supabase CLI
 
 ```bash
 brew install supabase/tap/supabase
@@ -79,7 +94,7 @@ brew install supabase/tap/supabase
 
 Проверка: `supabase --version`
 
-### 7. Безопасность — ~/.npmrc
+### 8. Безопасность — ~/.npmrc
 
 ```bash
 cat > ~/.npmrc << 'EOF'
@@ -92,7 +107,7 @@ EOF
 
 Проверка: `cat ~/.npmrc`
 
-### 8. GitGuardian (опционально)
+### 9. GitGuardian (опционально)
 
 ```bash
 brew install gitguardian/tap/ggshield
@@ -101,20 +116,27 @@ ggshield auth login
 
 ## Базовая установка (Linux / WSL)
 
-### 1. Обновить пакеты
+### 1. Claude Code
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+claude
+```
+
+### 2. Обновить пакеты
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 2. Node.js
+### 3. Node.js
 
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-### 3. Git
+### 4. Git
 
 ```bash
 sudo apt install -y git
@@ -122,7 +144,7 @@ git config --global user.name "Ваше Имя"
 git config --global user.email "your@email.com"
 ```
 
-### 4-8: те же команды что для macOS
+### 5-9: те же команды что для macOS
 
 (gh, vercel, supabase CLI, npmrc — команды `npm install -g` и `gh auth login` одинаковы на всех платформах)
 
@@ -175,6 +197,7 @@ brew install hcloud
 ```bash
 node -v
 npm -v
+claude --version
 git --version
 gh auth status
 vercel --version

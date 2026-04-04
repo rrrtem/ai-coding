@@ -10,6 +10,9 @@
 # OS
 uname -srm
 
+# Claude Code
+claude --version 2>/dev/null || echo "claude: не установлен"
+
 # Менеджер пакетов
 brew --version 2>/dev/null || echo "brew: не установлен"
 
@@ -76,6 +79,7 @@ hcloud version 2>/dev/null || echo "hcloud: не установлен (не ну
 
 | Инструмент | Версия | Статус |
 |------------|--------|--------|
+| Claude Code | [версия] | [OK / ОШИБКА] |
 | Node.js | [версия] | [OK / ОШИБКА] |
 | npm | [версия] | [OK / ОШИБКА] |
 | Git | [версия] | [OK / ОШИБКА] |
