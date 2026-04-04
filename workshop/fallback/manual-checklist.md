@@ -33,7 +33,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 brew install node
 ```
 
-Проверка: `node -v` (должно быть v20 или выше)
+Проверка: `node -v` (должно быть v22 или выше), `npm -v` (должно быть 11.x.x)
 
 ### 3. Git
 
@@ -110,7 +110,7 @@ sudo apt update && sudo apt upgrade -y
 ### 2. Node.js
 
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
@@ -151,6 +151,22 @@ sudo apt install -y python3 python3-pip python3-venv   # Linux
 ```bash
 npm install -g expo-cli eas-cli
 ```
+
+### Деплой на VPS (Docker + hcloud)
+
+**Docker Desktop (macOS):** скачайте с [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/)
+
+**Docker (Linux):**
+```bash
+curl -fsSL https://get.docker.com | sh
+```
+
+**hcloud (Hetzner Cloud CLI):**
+```bash
+brew install hcloud
+```
+
+Проверка: `docker --version` и `hcloud version`
 
 ## Финальная проверка
 
