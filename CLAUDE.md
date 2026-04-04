@@ -18,14 +18,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Три этапа, строго последовательно. Не переходи к следующему пока текущий не завершён.
 
-### Этап 1: Базовая установка
+### Этап 1: Базовая установка (12 шагов)
 Прочитай `prework/01-base-setup.md` и выполни все шаги: определение OS, установка базовых инструментов (Node.js, Git, GitHub CLI, Vercel CLI, Supabase CLI), настройка безопасности (npmrc, npm-safe-install, ggshield), установка Claude Code Skills (Superpowers, az-review), конфигурация git.
 
-### Этап 2: Установка под тип проекта
-Прочитай `prework/02-stack-setup.md`. Спроси участника какие типы проектов ему интересны (сайты, боты, мобильные приложения, автоматизация). Установи дополнительные инструменты по ответу.
+### Этап 2: Установка под тип проекта (интерактивный)
+Прочитай `prework/02-stack-setup.md`. Спроси участника какие типы проектов ему интересны (сайты, боты, мобильные приложения, автоматизация). Установи дополнительные инструменты по ответу. Варианты: Python, Docker, hcloud, Expo/EAS -- или ничего, если хватает базовой установки.
 
 ### Этап 3: Проверка и отчёт
 Прочитай `prework/03-verify-and-report.md`. Прогони все проверки, создай `setup-report.md` в корне проекта.
+
+## Ключевые пути установки
+
+Где что оказывается после выполнения:
+
+| Что | Куда |
+|-----|------|
+| npm-safe-install (скрипт) | `~/bin/npm-safe-install` (+ добавить ~/bin в PATH) |
+| Настройки npm | `~/.npmrc` (НЕ перезаписывать, только дописывать) |
+| az-review skill | `~/.claude/skills/az-review/SKILL.md` (копируется из `prework/skills/az-review/SKILL.md`) |
+| Superpowers plugin | Устанавливается через `/plugin install superpowers@claude-plugins-official` |
+| Отчёт о настройке | `setup-report.md` в корне проекта |
 
 ## Стиль объяснений
 
@@ -119,4 +131,5 @@ docs/                                  — справочные материал
   09-git.md                            — Git для не-разработчиков
   10-troubleshooting.md                — типичные ошибки и решения
   vps-hardening-runbook.md             — харденинг VPS (10 фаз, для деплоя ботов)
+  superpowers/specs/                   — спецификации для будущих доработок
 ```
