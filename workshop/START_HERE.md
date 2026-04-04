@@ -32,13 +32,15 @@
 
 Скопируйте и вставьте эту команду в терминал:
 
+**macOS / Linux / WSL:**
 ```bash
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-> Если терминал говорит "npm: command not found" — сначала установите Node.js:
-> - **macOS:** `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` а затем `brew install node`
-> - **Linux/WSL:** `curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt install -y nodejs`
+**Windows (PowerShell):**
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
 
 Проверьте что установилось:
 ```bash

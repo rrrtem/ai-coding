@@ -38,7 +38,7 @@ brew install node
 ### 3. Claude Code
 
 ```bash
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 ```
 
 Первый запуск и авторизация:
@@ -132,7 +132,7 @@ sudo apt install -y nodejs
 ### 3. Claude Code
 
 ```bash
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 claude
 ```
 
