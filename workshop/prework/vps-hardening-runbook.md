@@ -165,8 +165,20 @@ certbot --nginx -d your-domain.com
 ### Phase 7: Kernel Hardening (sysctl)
 
 ```bash
-tee /etc/sysctl.d/99-hardening.conf > /dev/null << 'EOF'
-net.ipv4.ip_forward = 0
+**Важно:** Если Docker установлен, `ip_forward` ДОЛЖЕН быть `1`, иначе контейнеры не смогут общаться друг с другом и с интернетом.
+
+```bash
+# Проверь, установлен ли Docker
+DOCKER_INSTALLED=$(systemctl is-active docker 2>/dev/null && echo "yes" || echo "no")
+
+if [ "$DOCKER_INSTALLED" = "yes" ]; then
+  IP_FORWARD_VALUE=1
+else
+  IP_FORWARD_VALUE=0
+fi
+
+tee /etc/sysctl.d/99-hardening.conf > /dev/null << EOF
+net.ipv4.ip_forward = $IP_FORWARD_VALUE
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.default.accept_redirects = 0
 net.ipv4.conf.all.accept_source_route = 0
@@ -180,10 +192,10 @@ net.ipv4.conf.default.send_redirects = 0
 vm.swappiness = 10
 EOF
 
-sysctl --system > /dev/null 2>&1
+sysctl --system
 ```
 
-**Если Docker установлен** — перезапусти его (Docker нужен ip_forward=1):
+**Если Docker установлен** — перезапусти его после применения sysctl:
 ```bash
 systemctl is-active docker &>/dev/null && systemctl restart docker
 ```
