@@ -38,14 +38,16 @@ chmod 600 /home/deploy/.ssh/authorized_keys
 
 Дай ограниченный sudo:
 ```bash
-echo 'deploy ALL=(ALL) NOPASSWD: /usr/bin/docker, /usr/bin/docker-compose, /usr/bin/docker compose' > /etc/sudoers.d/deploy
+echo 'deploy ALL=(ALL) NOPASSWD: /usr/bin/docker' > /etc/sudoers.d/deploy
 chmod 440 /etc/sudoers.d/deploy
 ```
 
 ### Phase 2: SSH Hardening
 
 **Предупреди участника:**
-> Сейчас я настрою SSH — отключу вход по паролю и вход как root. После этого доступ будет только по SSH-ключу через пользователя deploy. Убедись что ты можешь подключиться как deploy прежде чем мы продолжим.
+> Сейчас я настрою SSH — отключу вход по паролю и вход как root. После этого доступ будет только по SSH-ключу через пользователя deploy.
+>
+> **ВАЖНО: Открой ВТОРОЕ окно терминала и проверь `ssh deploy@<ip>` ПРЕЖДЕ чем мы продолжим.** Не закрывай текущую сессию пока не убедишься что deploy-подключение работает. Иначе можешь потерять доступ к серверу.
 
 Создай конфиг:
 ```bash
@@ -164,14 +166,13 @@ certbot --nginx -d your-domain.com
 
 ### Phase 7: Kernel Hardening (sysctl)
 
-```bash
 **Важно:** Если Docker установлен, `ip_forward` ДОЛЖЕН быть `1`, иначе контейнеры не смогут общаться друг с другом и с интернетом.
 
 ```bash
 # Проверь, установлен ли Docker
-DOCKER_INSTALLED=$(systemctl is-active docker 2>/dev/null && echo "yes" || echo "no")
+DOCKER_INSTALLED=$(systemctl is-active docker 2>/dev/null || echo "inactive")
 
-if [ "$DOCKER_INSTALLED" = "yes" ]; then
+if [ "$DOCKER_INSTALLED" = "active" ]; then
   IP_FORWARD_VALUE=1
 else
   IP_FORWARD_VALUE=0
@@ -189,6 +190,9 @@ fs.suid_dumpable = 0
 kernel.randomize_va_space = 2
 net.ipv4.conf.all.send_redirects = 0
 net.ipv4.conf.default.send_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv6.conf.default.accept_redirects = 0
+net.ipv6.conf.all.accept_source_route = 0
 vm.swappiness = 10
 EOF
 

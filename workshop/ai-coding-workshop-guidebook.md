@@ -4,7 +4,7 @@
 
 ## Содержание
 
-- [0. PRE-WORK — Чеклист до воркшопа](#0-pre-work--чеклист-до-воркшопа)
+- [0. PRE-WORK — Подготовка до воркшопа](#0-pre-work--подготовка-до-воркшопа)
 - [1. Skills & Extensions](#1-skills--extensions)
 - [2. Tech Stacks — Выбор стека под задачу](#2-tech-stacks--выбор-стека-под-задачу)
 - [3. Security Setup](#3-security-setup)
@@ -15,7 +15,7 @@
 
 ---
 
-## 0. PRE-WORK — Чеклист до воркшопа
+## 0. PRE-WORK — Подготовка до воркшопа
 
 > Сделайте это за 2-3 дня до воркшопа. На самом воркшопе мы не будем ждать пока всё установится.
 
@@ -27,146 +27,29 @@
 - Chrome или Arc (рекомендуется)
 - Зарядка для ноутбука (AI coding съедает батарею быстро)
 
-### 0.2 Аккаунты
+### 0.2 Установка
 
-Создайте аккаунты заранее. Все бесплатные (кроме Claude):
+Следуйте инструкциям в **[START_HERE.md](START_HERE.md)** — это основной путь установки через Claude Code (автоматически).
 
-| Сервис | Зачем | Ссылка |
-|--------|-------|--------|
-| Claude Pro/Max | Подписка для работы агента | [claude.ai](https://claude.ai) |
-| GitHub | Хранение кода и версий | [github.com](https://github.com) |
-| Vercel | Хостинг сайта (бесплатно) | [vercel.com](https://vercel.com) — войти через GitHub |
-| Supabase | База данных + бэкенд (бесплатно) | [supabase.com](https://supabase.com) — войти через GitHub |
+Если автоматическая установка не сработала — используйте **[workshop/fallback/manual-checklist.md](fallback/manual-checklist.md)**.
 
-### 0.3 Установка софта
-
-#### macOS (основная инструкция)
-
-**1. Homebrew — менеджер пакетов**
+**После установки проверьте** — каждая команда должна показать версию:
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-Проверка:
-```bash
-brew --version
-# Homebrew 4.x.x
-```
-
-**2. Node.js 22+ — среда для JavaScript**
-
-```bash
-brew install node
-```
-
-Проверка:
-```bash
-node -v && npm -v
-# v22.x.x
-# 11.x.x
-```
-
-**3. Git — система контроля версий**
-
-```bash
-brew install git
-```
-
-Настройка (подставьте свои данные):
-```bash
-git config --global user.name "Ваше Имя"
-git config --global user.email "your@email.com"
-```
-
-Проверка:
-```bash
-git -v
-# git version 2.x.x
-```
-
-**4. GitHub CLI — работа с GitHub из терминала**
-
-```bash
-brew install gh
-gh auth login
-```
-
-При `gh auth login` выберите: GitHub.com → HTTPS → Login with a web browser.
-
-Проверка:
-```bash
-gh auth status
-# ✓ Logged in to github.com
-```
-
-**5. Claude Code CLI — AI агент**
-
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-Проверка:
-```bash
+node -v        # v22.x.x
+npm -v         # 11.x.x
+git -v         # git version 2.x.x
+gh auth status # ✓ Logged in
 claude --version
-```
-
-**6. Conductor (Superset) — GUI для Claude Code**
-
-Скачайте с официального сайта и перетащите в Applications.
-
-После установки:
-- Откройте Conductor
-- Войдите в GitHub (кнопка Sign In)
-- Conductor автоматически подхватит Claude Code CLI
-
-**7. Vercel CLI — деплой сайтов**
-
-```bash
-npm install -g vercel
-```
-
-Проверка:
-```bash
 vercel --version
-```
-
-**8. Supabase CLI — работа с базой данных**
-
-```bash
-brew install supabase/tap/supabase
-```
-
-Проверка:
-```bash
 supabase --version
 ```
 
-#### Windows
+### 0.3 Conductor (GUI для Claude Code)
 
-Используйте **Windows Terminal + WSL2** (Windows Subsystem for Linux). После установки WSL2 все команды выше работают так же, как на macOS (замените `brew install` на `sudo apt install` или используйте nvm для Node.js).
+Скачайте с [conductor.build](https://conductor.build) и перетащите в Applications. После установки войдите в GitHub (кнопка Sign In). Conductor автоматически подхватит Claude Code CLI.
 
-Установка WSL2:
-```powershell
-wsl --install
-```
-
-### 0.4 Verification Checklist
-
-Запустите каждую команду. Если всё работает — вы готовы.
-
-| # | Команда | Ожидаемый результат | ✓ |
-|---|---------|--------------------|----|
-| 1 | `node -v` | `v22.x.x` или выше | ☐ |
-| 2 | `npm -v` | `11.x.x` или выше | ☐ |
-| 3 | `git -v` | `git version 2.x.x` | ☐ |
-| 4 | `gh auth status` | `✓ Logged in to github.com` | ☐ |
-| 5 | `claude --version` | Показывает версию | ☐ |
-| 6 | Conductor | Открывается, GitHub подключён | ☐ |
-| 7 | `vercel --version` | Показывает версию | ☐ |
-| 8 | `supabase --version` | Показывает версию | ☐ |
-
-### 0.5 Важно
+### 0.4 Важно
 
 - **Папка для проектов** — создайте на локальном диске (например `~/Projects/`). **НЕ** в iCloud, Google Drive или Dropbox — это ломает работу инструментов.
 - **Возьмите зарядку** — AI coding активно использует процессор, батарея сядет быстрее обычного.
@@ -289,7 +172,7 @@ Hosting:      Railway или Hetzner VPS
 **Дополнительно установить:**
 ```bash
 brew install python
-pip install python-telegram-bot supabase
+pip3 install python-telegram-bot supabase
 ```
 
 **Особенности:**
@@ -309,8 +192,9 @@ API:          Vercel (serverless functions)
 
 **Дополнительно установить:**
 ```bash
-npm install -g expo-cli eas-cli
+npm install -g eas-cli
 ```
+> Вместо устаревшего `expo-cli` используйте `npx expo` для создания и запуска проектов.
 
 **Особенности:**
 - Те же React-паттерны, но рендерит нативные компоненты (не HTML)
@@ -327,7 +211,7 @@ Hosting:      Railway или Hetzner VPS
 
 **Дополнительно установить (Python вариант):**
 ```bash
-pip install fastapi uvicorn
+pip3 install fastapi uvicorn
 ```
 
 **Особенности:**
@@ -820,7 +704,7 @@ npm install          # установить зависимости
 **Git:**
 ```bash
 git status           # что изменилось?
-git add .            # добавить все изменения
+git add .            # добавить все изменения (⚠️ сначала проверь git status!)
 git commit -m "описание"  # сохранить изменения
 git push             # отправить на GitHub
 git pull             # скачать изменения с GitHub
@@ -996,6 +880,8 @@ git push                # отправить на GitHub
    ```
 8. Проверьте подключение — создайте тестовую таблицу в Supabase Dashboard и попробуйте прочитать данные.
 
+> ⚠️ **Обязательно включите Row Level Security (RLS)** на каждой таблице: Table Editor → таблица → RLS Enabled. Без RLS `anon key` даёт полный доступ к чтению и записи всех данных. RLS — это правила "кто может видеть/менять какие строки".
+
 **Полезные фичи Supabase:**
 - **Table Editor** — создавайте таблицы через UI, без SQL
 - **Auth** — готовая авторизация (email, Google, GitHub...)
@@ -1091,55 +977,14 @@ git push                # отправить на GitHub
 
 > Полный автоматизированный runbook для Claude Code: [`workshop/prework/vps-hardening-runbook.md`](prework/vps-hardening-runbook.md). Скажите Claude Code: "захардень мой сервер по runbook из workshop/prework/vps-hardening-runbook.md".
 
-Если вы деплоите на Hetzner, Railway или другой VPS (вместо Vercel):
+Если вы деплоите на Hetzner, Railway или другой VPS (вместо Vercel), используйте runbook выше. Ключевые принципы:
 
-**Базовая безопасность сервера:**
-
-```bash
-# 1. Создать deploy user (не работать от root!)
-adduser --disabled-password deploy
-mkdir -p /home/deploy/.ssh
-cp /root/.ssh/authorized_keys /home/deploy/.ssh/
-chown -R deploy:deploy /home/deploy/.ssh
-
-# 2. Ограничить sudo
-echo 'deploy ALL=(ALL) NOPASSWD: /usr/bin/docker, /usr/bin/docker-compose' > /etc/sudoers.d/deploy
-
-# 3. SSH: отключить вход по паролю
-# В /etc/ssh/sshd_config:
-# PasswordAuthentication no
-# PermitRootLogin no
-sudo systemctl restart sshd
-
-# 4. Firewall
-sudo ufw allow 22/tcp    # SSH
-sudo ufw allow 80/tcp    # HTTP
-sudo ufw allow 443/tcp   # HTTPS
-sudo ufw enable
-
-# 5. Docker: привязать порты к localhost
-# В docker-compose.yml:
-# ports:
-#   - "127.0.0.1:5432:5432"  # НЕ "5432:5432"
-
-# 6. SSL с Let's Encrypt
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d your-domain.com
-
-# 7. Автоматические бэкапы БД
-# Добавить в crontab:
-# 0 3 * * * docker exec db pg_dump -U user dbname | gzip > /backups/$(date +\%Y\%m\%d).sql.gz
-```
-
-**Чеклист VPS:**
-- [ ] Отдельный deploy user (не root)
-- [ ] SSH по ключам, пароль отключён
-- [ ] UFW firewall включён
-- [ ] Docker порты на 127.0.0.1
-- [ ] Nginx reverse proxy с SSL
-- [ ] Let's Encrypt сертификат
-- [ ] Ежедневные бэкапы БД
-- [ ] `.env` файл с правами 600
+- Отдельный deploy user (не root) с ограниченным sudo
+- SSH только по ключам, пароль отключён
+- UFW firewall: только 22/80/443
+- Docker порты привязаны к 127.0.0.1 (не открыты в интернет)
+- Nginx reverse proxy + Let's Encrypt SSL
+- `.env` файлы с правами 600
 
 ---
 

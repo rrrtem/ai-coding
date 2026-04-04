@@ -443,9 +443,9 @@ fi
 brew install gitguardian/tap/ggshield
 ```
 
-**Или через pip:**
+**Или через pip (если Python уже установлен):**
 ```bash
-pip install ggshield
+pip3 install ggshield
 ```
 
 ### Авторизация ggshield
@@ -460,6 +460,15 @@ ggshield auth login
 ```
 
 Если участник не хочет создавать ещё один аккаунт — это опционально. Отметь в отчёте что ggshield не авторизован.
+
+### Установка pre-commit hook
+
+Если ggshield авторизован — установи git hook, который автоматически проверяет каждый коммит на секреты:
+```bash
+ggshield install --mode local
+```
+
+> Без этого хука ggshield установлен, но ничего не делает — секреты по-прежнему можно случайно закоммитить.
 
 ## 1.11 Итог этапа
 

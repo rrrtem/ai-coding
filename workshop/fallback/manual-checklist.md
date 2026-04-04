@@ -106,7 +106,11 @@ grep -q "^fund=false" ~/.npmrc 2>/dev/null || echo "fund=false" >> ~/.npmrc
 
 Проверка: `cat ~/.npmrc`
 
-### 9. GitGuardian (опционально)
+### 9. npm-safe-install (опционально)
+
+Скрипт для проверки npm-пакетов перед установкой. Полная версия с кодом — в `workshop/prework/01-base-setup.md`, секция 1.9. Если вы завершили автоматическую установку — скрипт уже создан.
+
+### 10. GitGuardian (опционально)
 
 ```bash
 brew install gitguardian/tap/ggshield
@@ -170,8 +174,9 @@ sudo apt install -y python3 python3-pip python3-venv   # Linux
 
 ### Мобильное приложение
 ```bash
-npm install -g expo-cli eas-cli
+npm install -g eas-cli
 ```
+> `expo-cli` устарел. Используйте `npx expo` вместо глобального `expo`.
 
 ### Деплой на VPS (Docker + hcloud)
 
