@@ -50,7 +50,7 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-**Важно:** после установки Homebrew на Apple Silicon (M1/M2/M3/M4 — новые процессоры Apple) может потребоваться добавить его в PATH (список папок, где система ищет программы):
+**Важно:** после установки Homebrew на Apple Silicon (M1/M2/M3/M4 — новые процессоры Apple) **обязательно** добавь его в PATH (список папок, где система ищет программы). Без этого шага все последующие `brew` команды вернут "command not found":
 ```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -178,7 +178,7 @@ brew install gh
 ```bash
 (type -p wget >/dev/null || sudo apt install wget -y) \
   && sudo mkdir -p -m 755 /etc/apt/keyrings \
-  && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+  && out=$(mktemp) && wget -nv -O "$out" https://cli.github.com/packages/githubcli-archive-keyring.gpg \
   && cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
   && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
@@ -249,7 +249,7 @@ brew install supabase/tap/supabase
 ```bash
 brew install supabase/tap/supabase
 ```
-(Если Homebrew нет на Linux — используй npm: `npm install -g supabase`)
+(Если Homebrew нет на Linux — установи через бинарник: скачай последний релиз с [github.com/supabase/cli](https://github.com/supabase/cli/releases))
 
 Проверь: `supabase --version`
 
@@ -289,7 +289,7 @@ grep -q "^fund=false" ~/.npmrc 2>/dev/null || echo "fund=false" >> ~/.npmrc
 
 Объясни участнику что означает каждая строка:
 > - `audit=true` — при каждом `npm install` npm проверяет все пакеты по базе известных уязвимостей (vulnerability — слабое место в коде, через которое могут навредить, как незакрытая дверь). Если найдёт проблему — предупредит.
-> - `ignore-scripts=true` — **самая важная.** Блокирует автоматический запуск скриптов при установке пакетов. Именно через такие скрипты вредоносные пакеты запускают свой код. Если легитимному пакету нужны скрипты (редко) — ты разрешишь вручную.
+> - `ignore-scripts=true` — **самая важная.** Блокирует автоматический запуск скриптов при установке пакетов. Именно через такие скрипты вредоносные пакеты запускают свой код. Если легитимному пакету нужны скрипты (например `esbuild`, `sharp`, `puppeteer`) — разреши вручную: `npm install <пакет> --ignore-scripts=false`.
 > - `engine-strict=true` — не даёт установить пакет, который не поддерживает твою версию Node.js. Спасает от загадочных ошибок "работает у всех, а у меня нет".
 > - `fund=false` — убирает сообщения "этот пакет ищет спонсоров" при установке. Не влияет на безопасность, просто убирает шум.
 
@@ -351,9 +351,19 @@ DOWNLOADS=$(curl -s "https://api.npmjs.org/downloads/point/last-week/$PACKAGE" 2
 
 WARNINGS=0
 
+# Helper: convert ISO date to epoch (works on both macOS and Linux)
+to_epoch() {
+  local dt="${1%%.*}"  # strip fractional seconds
+  dt="${dt%%Z}"        # strip trailing Z
+  date -j -f "%Y-%m-%dT%H:%M:%S" "$dt" "+%s" 2>/dev/null \
+    || date -d "$dt" "+%s" 2>/dev/null \
+    || node -e "console.log(Math.floor(new Date('$1').getTime()/1000))" 2>/dev/null \
+    || echo "0"
+}
+
 # Check age > 365 days
 if [ "$CREATED" != "unknown" ]; then
-  CREATED_TS=$(date -j -f "%Y-%m-%dT%H:%M:%S" "${CREATED%%.*}" "+%s" 2>/dev/null || date -d "${CREATED%%.*}" "+%s" 2>/dev/null || echo "0")
+  CREATED_TS=$(to_epoch "$CREATED")
   NOW_TS=$(date "+%s")
   AGE_DAYS=$(( (NOW_TS - CREATED_TS) / 86400 ))
   if [ "$AGE_DAYS" -lt 365 ]; then
@@ -366,7 +376,7 @@ fi
 
 # Check latest version age > 7 days
 if [ "$LATEST_DATE" != "unknown" ]; then
-  LATEST_TS=$(date -j -f "%Y-%m-%dT%H:%M:%S" "${LATEST_DATE%%.*}" "+%s" 2>/dev/null || date -d "${LATEST_DATE%%.*}" "+%s" 2>/dev/null || echo "0")
+  LATEST_TS=$(to_epoch "$LATEST_DATE")
   NOW_TS=$(date "+%s")
   VER_AGE_DAYS=$(( (NOW_TS - LATEST_TS) / 86400 ))
   if [ "$VER_AGE_DAYS" -lt 7 ]; then
@@ -433,9 +443,9 @@ fi
 brew install gitguardian/tap/ggshield
 ```
 
-**Или через pip:**
+**Или через pip (если Python уже установлен):**
 ```bash
-pip install ggshield
+pip3 install ggshield
 ```
 
 ### Авторизация ggshield
@@ -451,12 +461,21 @@ ggshield auth login
 
 Если участник не хочет создавать ещё один аккаунт — это опционально. Отметь в отчёте что ggshield не авторизован.
 
+### Установка pre-commit hook
+
+Если ggshield авторизован — установи git hook, который автоматически проверяет каждый коммит на секреты:
+```bash
+ggshield install --mode local
+```
+
+> Без этого хука ggshield установлен, но ничего не делает — секреты по-прежнему можно случайно закоммитить.
+
 ## 1.11 Итог этапа
 
 Перед тем как перейти к этапу 2, убедись что всё из списка ниже работает:
 
 - [ ] Менеджер пакетов (brew / apt)
-- [ ] Node.js 20+ и npm
+- [ ] Node.js 22+ и npm 11+
 - [ ] Git настроен (имя + email)
 - [ ] GitHub CLI авторизован
 - [ ] Vercel CLI

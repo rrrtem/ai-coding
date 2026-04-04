@@ -34,7 +34,7 @@ claude
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Если у вас Mac на Apple Silicon (M1/M2/M3/M4) — после установки выполните:
+Если у вас Mac на Apple Silicon (M1/M2/M3/M4) — **обязательно** выполните после установки (иначе `brew` не найдётся):
 ```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -96,18 +96,21 @@ brew install supabase/tap/supabase
 
 ### 8. Безопасность — ~/.npmrc
 
+Добавьте недостающие строки (если файл уже существует — он НЕ будет перезаписан):
 ```bash
-cat > ~/.npmrc << 'EOF'
-audit=true
-ignore-scripts=true
-engine-strict=true
-fund=false
-EOF
+grep -q "^audit=true" ~/.npmrc 2>/dev/null || echo "audit=true" >> ~/.npmrc
+grep -q "^ignore-scripts=true" ~/.npmrc 2>/dev/null || echo "ignore-scripts=true" >> ~/.npmrc
+grep -q "^engine-strict=true" ~/.npmrc 2>/dev/null || echo "engine-strict=true" >> ~/.npmrc
+grep -q "^fund=false" ~/.npmrc 2>/dev/null || echo "fund=false" >> ~/.npmrc
 ```
 
 Проверка: `cat ~/.npmrc`
 
-### 9. GitGuardian (опционально)
+### 9. npm-safe-install (опционально)
+
+Скрипт для проверки npm-пакетов перед установкой. Полная версия с кодом — в `workshop/prework/01-base-setup.md`, секция 1.9. Если вы завершили автоматическую установку — скрипт уже создан.
+
+### 10. GitGuardian (опционально)
 
 ```bash
 brew install gitguardian/tap/ggshield
@@ -144,21 +147,43 @@ git config --global user.name "Ваше Имя"
 git config --global user.email "your@email.com"
 ```
 
-### 5-9: те же команды что для macOS
-
-(gh, vercel, supabase CLI, npmrc — команды `npm install -g` и `gh auth login` одинаковы на всех платформах)
+### 5. GitHub CLI (Linux)
 
 Для GitHub CLI на Linux:
 ```bash
 (type -p wget >/dev/null || sudo apt install wget -y) \
   && sudo mkdir -p -m 755 /etc/apt/keyrings \
-  && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+  && out=$(mktemp) && wget -nv -O "$out" https://cli.github.com/packages/githubcli-archive-keyring.gpg \
   && cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
   && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
   && sudo apt update \
   && sudo apt install gh -y
 ```
+
+Авторизация: `gh auth login` (выберите GitHub.com → HTTPS → Login with a web browser)
+
+### 6. Vercel CLI (Linux — то же что macOS)
+
+```bash
+npm install -g vercel
+```
+
+Проверка: `vercel --version`
+
+### 7. Supabase CLI (Linux)
+
+```bash
+# Через Homebrew (если установлен):
+brew install supabase/tap/supabase
+# Или скачайте бинарник с https://github.com/supabase/cli/releases
+```
+
+Проверка: `supabase --version`
+
+### 8-10: Безопасность и npm-safe-install
+
+Команды `.npmrc` и ggshield одинаковы на всех платформах — см. macOS-секции 8-10 выше.
 
 ## Дополнительно (по типу проекта)
 
@@ -171,8 +196,9 @@ sudo apt install -y python3 python3-pip python3-venv   # Linux
 
 ### Мобильное приложение
 ```bash
-npm install -g expo-cli eas-cli
+npm install -g eas-cli
 ```
+> `expo-cli` устарел. Используйте `npx expo` вместо глобального `expo`.
 
 ### Деплой на VPS (Docker + hcloud)
 
