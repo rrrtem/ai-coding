@@ -527,6 +527,24 @@ cp prework/skills/az-review/SKILL.md ~/.claude/skills/az-review/SKILL.md
 test -f ~/.claude/skills/az-review/SKILL.md && echo "az-review: OK" || echo "az-review: ОШИБКА"
 ```
 
+### Часть C: explain (авторский скилл)
+
+Скилл для объяснения кода, концепций и контекста разговора. Файл уже лежит в репозитории.
+
+```bash
+mkdir -p ~/.claude/skills/explain
+cp prework/skills/explain/SKILL.md ~/.claude/skills/explain/SKILL.md
+```
+
+Объясни участнику:
+
+> Это скилл для объяснений. Вызывается командой `/explain` или словами "объясни". Работает в два этапа: сначала описывает что происходит техническим языком (все термины как есть), потом разбирает каждый термин с аналогиями из жизни, причинами и следствиями. Помогает понимать код и решения, не пряча реальность за упрощениями.
+
+Проверь:
+```bash
+test -f ~/.claude/skills/explain/SKILL.md && echo "explain: OK" || echo "explain: ОШИБКА"
+```
+
 ## 1.12 Итог этапа
 
 Перед тем как перейти к этапу 2, убедись что всё из списка ниже работает:
@@ -542,5 +560,6 @@ test -f ~/.claude/skills/az-review/SKILL.md && echo "az-review: OK" || echo "az-
 - [ ] ggshield установлен (авторизация опциональна)
 - [ ] Superpowers skill pack установлен
 - [ ] az-review skill установлен
+- [ ] explain skill установлен
 
 Сообщи участнику результат и переходи к этапу 2.

@@ -43,6 +43,7 @@ ggshield auth status 2>&1 || echo "ggshield: не авторизован"
 
 # Claude Code Skills
 test -f ~/.claude/skills/az-review/SKILL.md && echo "az-review: установлен" || echo "az-review: не установлен"
+test -f ~/.claude/skills/explain/SKILL.md && echo "explain: установлен" || echo "explain: не установлен"
 # Superpowers — проверяется через наличие плагина, Claude Code определит сам
 
 # Python (если устанавливали)
@@ -109,6 +110,7 @@ hcloud version 2>/dev/null || echo "hcloud: не установлен (не ну
 |-----------|--------|
 | Superpowers plugin | [OK / не установлен] |
 | az-review skill | [OK / не установлен] |
+| explain skill | [OK / не установлен] |
 
 ## Дополнительные инструменты
 
